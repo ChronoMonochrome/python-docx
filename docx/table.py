@@ -80,6 +80,22 @@ class Table(Parented):
         cell_idx = col_idx + (row_idx * self._column_count)
         return self._cells[cell_idx]
 
+    @property
+    def caption(self):
+        """
+        Return the value of the ``val`` attribute of the
+        ``<w:tblCaption>`` child or an empty string if not present.
+        """
+        return self._tbl.tblPr.caption
+
+    @property
+    def description(self):
+        """
+        Return the value of the ``val`` attribute of the
+        ``<w:tblDescription>`` child or an empty string if not present.
+        """
+        return self._tbl.tblPr.description
+
     def column_cells(self, column_idx):
         """
         Sequence of cells in the column at *column_idx* in this table.

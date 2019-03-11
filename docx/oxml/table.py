@@ -282,6 +282,8 @@ class CT_TblPr(BaseOxmlElement):
     bidiVisual = ZeroOrOne('w:bidiVisual', successors=_tag_seq[4:])
     jc = ZeroOrOne('w:jc', successors=_tag_seq[8:])
     tblLayout = ZeroOrOne('w:tblLayout', successors=_tag_seq[13:])
+    tblCaption = ZeroOrOne('w:tblCaption', successors=_tag_seq[16:])
+    tblDescription = ZeroOrOne('w:tblDescription', successors=_tag_seq[17:])
     del _tag_seq
 
     @property
@@ -319,6 +321,30 @@ class CT_TblPr(BaseOxmlElement):
     def autofit(self, value):
         tblLayout = self.get_or_add_tblLayout()
         tblLayout.type = 'autofit' if value else 'fixed'
+
+    @property
+    def caption(self):
+        """
+        Return the value of the ``val`` attribute of the ``<w:tblCaption>``
+        child or an empty string if not present.
+        """
+        tblCaption = self.tblCaption
+        if tblCaption is None:
+            return ""
+        _val = RequiredAttribute("w:val", "")
+        return tblCaption.get(_val._clark_name)
+
+    @property
+    def description(self):
+        """
+        Return the value of the ``val`` attribute of the ``<w:tblDescription>``
+        child or an empty string if not present.
+        """
+        tblDescription = self.tblDescription
+        if tblDescription is None:
+            return ""
+        _val = RequiredAttribute("w:val", "")
+        return tblDescription.get(_val._clark_name)
 
     @property
     def style(self):
